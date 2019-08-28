@@ -1,9 +1,9 @@
 # HashMap 源码解读
 
   说到 HashMap，大家一定都不会陌生，不管是我们平时使用，或者是面试的时候，都会遇到它，了解其源码还是相当重要的。
-  
+
   HashMap 其实维护的的数据结构是 Node<K,V>  的数组加链表（下面会说到为什么），那么 Node 是什么呢？
-  
+
   Node 可以理解为 HashMap 中实际保存每一组 key-value 的映射项，它是实现的 Map.Entry<K,V>，下面我们来看看 Node 的源码。
 
 ```Java
@@ -37,7 +37,7 @@ static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
 // 最大容量 2的30次方
 static final int MAXIMUM_CAPACITY = 1 << 30;
 
-// 默认加载因素 为 0.75f
+// 默认装载因子 为 0.75f
 static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 // HashMap 保存数据使用的数组
@@ -47,4 +47,66 @@ transient Node<K,V>[] table;
 transient int size;
 
 // 扩容值，当 size 达到这个值时，HashMap 就要扩容
-int threshold;
+int threshold; 为 capacity * load factor
+
+## 构造方法
+  HashMap 有四个构造方法，我们来看一下这四个方法：
+
+```java
+/**
+     * Constructs an empty <tt>HashMap</tt> with the specified initial
+     * capacity and load factor.
+     *
+     * @param  initialCapacity the initial capacity 传入的初始化容量
+     * @param  loadFactor      the load factor 传入的装载因子
+     * @throws IllegalArgumentException if the initial capacity is negative
+     *         or the load factor is nonpositive
+     */
+public HashMap(int initialCapacity, float loadFactor) {
+    // 容量不能为空
+        if (initialCapacity < 0)
+            throw new IllegalArgumentException("Illegal initial capacity: " +
+                                               initialCapacity);
+    // 如果传入的容量已经大于规定的最大容量，就为最大容量
+        if (initialCapacity > MAXIMUM_CAPACITY)
+            initialCapacity = MAXIMUM_CAPACITY;
+    // 装载因子不能小于等于 0
+        if (loadFactor <= 0 || Float.isNaN(loadFactor))
+            throw new IllegalArgumentException("Illegal load factor: " +
+                                               loadFactor);
+    // 设置装载因子和确定扩容值
+        this.loadFactor = loadFactor;
+        this.threshold = tableSizeFor(initialCapacity);
+    }
+
+/**
+     * @param  initialCapacity the initial capacity. 只传入初始容量
+     * @throws IllegalArgumentException if the initial capacity is negative.
+     */
+public HashMap(int initialCapacity) {
+    // 装载因子为默认装载因子 0.75f
+        this(initialCapacity, DEFAULT_LOAD_FACTOR);
+    }
+```
+
+  上面的构造方法我们看到了会传入初始化的容量，其实这个容量并不是真正用来作为数组的容量的，而是为了来确定扩容值的，我们上面看到了的确认扩容值的方法是 tableSizeFor(initialCapacity)，那么这个方法是干嘛的呢？
+
+```java
+/**
+     * Returns a power of two size for the given target capacity.
+     */
+    static final int tableSizeFor(int cap) {
+        int n = cap - 1;
+        n |= n >>> 1;
+        n |= n >>> 2;
+        n |= n >>> 4;
+        n |= n >>> 8;
+        n |= n >>> 16;
+        return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+    }
+```
+
+  这个方法是返回一个大于 cap 并且最接近的一个 2的n次幂的一个值来作为扩容值。
+
+
+
