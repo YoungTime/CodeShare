@@ -1,7 +1,9 @@
 # HashMap 源码解读
 
   说到 HashMap，大家一定都不会陌生，不管是我们平时使用，或者是面试的时候，都会遇到它，了解其源码还是相当重要的。
+  
   HashMap 其实维护的的数据结构是 Node<K,V>  的数组加链表（下面会说到为什么），那么 Node 是什么呢？
+  
   Node 可以理解为 HashMap 中实际保存每一组 key-value 的映射项，它是实现的 Map.Entry<K,V>，下面我们来看看 Node 的源码。
 
 ```Java
