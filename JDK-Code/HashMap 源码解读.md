@@ -96,12 +96,44 @@ public HashMap() {
 // 这个构造方法会传入一个 map
 public HashMap(Map<? extends K, ? extends V> m) {
         this.loadFactor = DEFAULT_LOAD_FACTOR;
-    // 将传的 map put 到我们的 hashMap 中，该方法下面会讲到
+    // 将传的 map put 到我们的 hashMap 中
         putMapEntries(m, false);
     }
 ```
+hhhhhh
 
-  上面的构造方法我们看到了会传入初始化的容量，其实这个容量并不是真正用来作为数组的容量的，而是为了来确定扩容值的，我们上面看到了的确认扩容值的方法是 tableSizeFor(initialCapacity)，那么这个方法是干嘛的呢？
+  ```java
+final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
+        // 拿到传入的 map 的 size
+        int s = m.size();
+        if (s > 0) {
+            // 如果当前保存 Node 的数组为空
+            if (table == null) { // pre-size
+                // 使用 size / loadFactor(装载因子) 拿到一个临时值
+                float ft = ((float)s / loadFactor) + 1.0F;
+                // 如果已经大于规定的最大值就使用最大值
+                int t = ((ft < (float)MAXIMUM_CAPACITY) ?
+                        (int)ft : MAXIMUM_CAPACITY);
+                if (t > threshold)
+                    // 确定扩容值，这个方法下面有说明
+                    threshold = tableSizeFor(t);
+            }
+            else if (s > threshold)
+                // 如果 Node 数组不为空，并且 size 已经大于扩容值，就需要扩容了
+                // 扩容方法下面会讲到
+                resize();
+            for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
+                K key = e.getKey();
+                V value = e.getValue();
+                putVal(hash(key), key, value, false, evict);
+            }
+        }
+    }
+  ```
+
+
+
+上面的构造方法我们看到了会传入初始化的容量，其实这个容量并不是真正用来作为数组的容量的，而是为了来确定扩容值的，我们上面看到了的确认扩容值的方法是 tableSizeFor(initialCapacity)，那么这个方法是干嘛的呢？
 
 ```java
 /**
@@ -119,6 +151,34 @@ public HashMap(Map<? extends K, ? extends V> m) {
 ```
 
   这个方法是返回一个大于 cap 并且最接近的一个 2的n次幂的一个值来作为扩容值。
+
+  那我们第四个构造方法中的 putMapEntries 又具体干了啥呢？
+
+```java
+final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
+        int s = m.size();
+        if (s > 0) {
+            if (table == null) { // pre-size
+                float ft = ((float)s / loadFactor) + 1.0F;
+                int t = ((ft < (float)MAXIMUM_CAPACITY) ?
+                         (int)ft : MAXIMUM_CAPACITY);
+                if (t > threshold)
+                    threshold = tableSizeFor(t);
+            }
+            else if (s > threshold)
+                resize();
+            for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
+                K key = e.getKey();
+                V value = e.getValue();
+                putVal(hash(key), key, value, false, evict);
+            }
+        }
+    }
+```
+
+
+
+  看完了构造方法，我们来看一下 HashMap 的最常用的方法，get 和 put，我们可以看到，其实 put 方法也是调用的 putVal 方法，和上面
 
 
 
