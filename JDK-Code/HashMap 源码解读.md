@@ -87,6 +87,18 @@ public HashMap(int initialCapacity) {
     // 装载因子为默认装载因子 0.75f
         this(initialCapacity, DEFAULT_LOAD_FACTOR);
     }
+
+// 这个应该是我们最常用的构造方法，它所有的字段都是默认字段
+public HashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
+    }
+
+// 这个构造方法会传入一个 map
+public HashMap(Map<? extends K, ? extends V> m) {
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
+    // 将传的 map put 到我们的 hashMap 中，该方法下面会讲到
+        putMapEntries(m, false);
+    }
 ```
 
   上面的构造方法我们看到了会传入初始化的容量，其实这个容量并不是真正用来作为数组的容量的，而是为了来确定扩容值的，我们上面看到了的确认扩容值的方法是 tableSizeFor(initialCapacity)，那么这个方法是干嘛的呢？
