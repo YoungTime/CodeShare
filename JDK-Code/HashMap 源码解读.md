@@ -100,7 +100,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
         putMapEntries(m, false);
     }
 ```
-hhhhhh
+  上面我们看到使用了 putMapEntries 方法将原 map 放入新的 HashMap，那么它到底干了啥呢？
 
   ```java
 final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
@@ -125,15 +125,14 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
             for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
                 K key = e.getKey();
                 V value = e.getValue();
+                // 这个方法是真正往 HashMap 存值的方法，下面也会说明
                 putVal(hash(key), key, value, false, evict);
             }
         }
     }
   ```
 
-
-
-上面的构造方法我们看到了会传入初始化的容量，其实这个容量并不是真正用来作为数组的容量的，而是为了来确定扩容值的，我们上面看到了的确认扩容值的方法是 tableSizeFor(initialCapacity)，那么这个方法是干嘛的呢？
+  上面的构造方法我们看到了会传入初始化的容量，其实这个容量并不是真正用来作为数组的容量的，而是为了来确定扩容值的，我们上面看到了的确认扩容值的方法是 tableSizeFor(initialCapacity)，那么这个方法是干嘛的呢？
 
 ```java
 /**
@@ -150,9 +149,9 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
     }
 ```
 
-  这个方法是返回一个大于 cap 并且最接近的一个 2的n次幂的一个值来作为扩容值。
+​    这个方法是返回一个大于 cap 并且最接近的一个 2的n次幂的一个值来作为扩容值。
 
-  那我们第四个构造方法中的 putMapEntries 又具体干了啥呢？
+​    那我们第四个构造方法中的 putMapEntries 又具体干了啥呢？
 
 ```java
 final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
@@ -176,9 +175,17 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
     }
 ```
 
+  看完了构造方法，我们来看一下 HashMap 的最常用的方法，get 和 put，我们可以看到，其实 put 方法也是调用的 putVal 方法，和上面 putMapEntries 方法实际调用的是同一个方法。
+
+```java
+public V put(K key, V value) {
+        return putVal(hash(key), key, value, false, true);
+    }
+```
+
+  所以说 put 方法就是使用的 putVal 方法：
 
 
-  看完了构造方法，我们来看一下 HashMap 的最常用的方法，get 和 put，我们可以看到，其实 put 方法也是调用的 putVal 方法，和上面
 
 
 
