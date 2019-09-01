@@ -403,5 +403,5 @@ final Node<K,V>[] resize() {
 
   我们知道，put 时是将数据放入到下标为 **(n - 1) & hash**  中，那么 (n - 1) & hash 是干了啥呢？我们上面说了 (n - 1) & hash 就等于 hash %  (n - 1) ，其实在二进制中，取余就是取低位，这个是什么意思呢？因为 n 是2的整数次幂，这里我们整数为 m：
 
-![hashmap_1_1](\image\hashmap_1_1.png)
+![hashmap_1_1](/image/hashmap_1_1.png)
 
