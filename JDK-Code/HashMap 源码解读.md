@@ -11,7 +11,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
         final K key;
         V value;
-    // 这里有一个对下一个节点的运用，可以看出使用了指针
+    // 这里有一个对下一个节点的运用，可以看出使用了链表
         Node<K,V> next;
 
         Node(int hash, K key, V value, Node<K,V> next) {
@@ -150,30 +150,6 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
 ```
 
 ​    这个方法是返回一个大于 cap 并且最接近的一个 2的n次幂的一个值来作为扩容值。
-
-​    那我们第四个构造方法中的 putMapEntries 又具体干了啥呢？
-
-```java
-final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
-        int s = m.size();
-        if (s > 0) {
-            if (table == null) { // pre-size
-                float ft = ((float)s / loadFactor) + 1.0F;
-                int t = ((ft < (float)MAXIMUM_CAPACITY) ?
-                         (int)ft : MAXIMUM_CAPACITY);
-                if (t > threshold)
-                    threshold = tableSizeFor(t);
-            }
-            else if (s > threshold)
-                resize();
-            for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
-                K key = e.getKey();
-                V value = e.getValue();
-                putVal(hash(key), key, value, false, evict);
-            }
-        }
-    }
-```
 
   看完了构造方法，我们来看一下 HashMap 的最常用的方法，get 和 put，我们可以看到，其实 put 方法也是调用的 putVal 方法，和上面 putMapEntries 方法实际调用的是同一个方法。
 
