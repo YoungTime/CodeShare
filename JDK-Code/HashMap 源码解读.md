@@ -11,7 +11,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
         final K key;
         V value;
-    // 这里有一个对下一个节点的运用，可以看出使用了链表
+    // 这里有一个对下一个节点的引用，可以看出使用了链表
         Node<K,V> next;
 
         Node(int hash, K key, V value, Node<K,V> next) {
