@@ -4,7 +4,7 @@
 
 ## 2 的整数次幂与 (n-1) & hash 
 
-  在笔者的 [HashMap 源码解析](/HashMap 源码解读.md) 中说到了，HashMap 中规定了，数组 table 的容量以及扩容值都必须为 2 的整数次幂。在 HashMap 中，元素 Node 在数组中的位置是 hash 对数组容量取余，也就是 hash % n，而且也说到了 (n-1) & hash 相当于 hash % n，这样的好处我们当然一眼就能看出来，<font color=red>位运算肯定是比取余要快</font>，那为什么当 n 为 2 的整数次幂时，(n-1) & n 就等于 hash % n？我们来看一下。
+  在笔者的 [HashMap 源码解析](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md) 中说到了，HashMap 中规定了，数组 table 的容量以及扩容值都必须为 2 的整数次幂。在 HashMap 中，元素 Node 在数组中的位置是 hash 对数组容量取余，也就是 hash % n，而且也说到了 (n-1) & hash 相当于 hash % n，这样的好处我们当然一眼就能看出来，<font color=red>位运算肯定是比取余要快</font>，那为什么当 n 为 2 的整数次幂时，(n-1) & n 就等于 hash % n？我们来看一下。
 
 
 
