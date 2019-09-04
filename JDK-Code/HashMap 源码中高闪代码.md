@@ -12,7 +12,7 @@
 
    ![hashmap_2_1](../image/hashmap_2_1.png)
 
-  如果大家只看二进制，能够看出 5 % 3 等于多少吗？当然是很不容易的。当然大家不要想着 10 进制里面的 5 % 3 = 2，要不然你就是在为难我胖虎。
+  如果大家只看二进制，能够看出 0101 % 0011 等于多少吗？当然是很不容易直接看出来的。当然大家不要想着 10 进制里面的 5 % 3 = 2，要不然你就是在为难我胖虎。
 
 ![hashmap_2_2](../image/hashmap_2_2.jpg)
 
@@ -20,13 +20,23 @@
 
 ![hashmap_2_3](../image/hashmap_2_3.png)
 
-  这样看 a % b 是不是一下子就明了，知道 a / b 和 a % b 的值时什么了。啥？还是不知道？
+  这样看 a % b 是不是一下子就明了，知道 a / b 和 a % b 的值是什么了。啥？还是不知道？
 
 ![hashmap_2_4](../image/hashmap_2_4.png)
 
-a 的前面 x 位等于有多少个 b，a 的后 y 位表示 a % b 为多少。我们分别将 a 的前 x 位置为 0，和后 y 位置为 0：
+  a 的前面 x 位等于有多少个 b，a 的后 y 位表示 a % b 为多少。我们分别将 a 的前 x 位置为 0，和后 y 位置为 0：
 
 ![hashmap_2_5](../image/hashmap_2_5.png)
 
 ![hashmap_2_6](../image/hashmap_2_6.png)
+
+  所以说，如果当 b 为 2 的整数次幂，我们要得出 a % b 的值，就是找到 a 的后 y 位的值，那怎么找到呢？我们知道位运算的一个常识，1 与任何数为任何数，0 与任何数为 0。所以如果我们要得到 a 的后 y 位，只要用一个前 x 位全为 0，后 y 位全为 1 的数来和 a 做与运算就可以得到 a 的后 y 位，那这个数是什么呢？正好就是 b - 1。
+
+![hashmap_2_7](../image/hashmap_2_7.png)
+
+  所以当 b 为 2 的整数次幂时， a % b 就等于 (b - 1) & a，也就是 HashMap 中的 hash % n = (n - 1) & hash。
+
+## HashMap 中的扩容
+
+   在[HashMap 源码解析](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md) 中已经对于 HashMap 的扩容做了一个分享，我们知道 HashMap 扩容时，根据 e.hash & oldCap 来判断将原来的链表放入到哪一个新的链表中，并且将两个链表的头指针一个放入了 table[j]，一个放入了 table[j + oldCap]。
 
