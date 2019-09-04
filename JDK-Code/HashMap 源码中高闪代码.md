@@ -40,5 +40,11 @@
 
    在[HashMap 源码解析](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md) 中已经对于 HashMap 的扩容做了一个分享，我们知道 HashMap 扩容时，根据 e.hash & oldCap 来判断将原来的链表放入到哪一个新的链表中，并且将两个链表的头指针一个放入了 table[j]，一个放入了 table[j + oldCap]。
 
-  作为 JDK 8 的源码，这里用作判断 e.hash & oldCap 和链表头指针的位置肯定不是随意写的，这个原因我在[HashMap 源码解析](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md) 
+
+
+  作为 JDK 8 的源码，这里用作判断 e.hash & oldCap 和链表头指针的位置肯定不是随意写的，这个原因我在[HashMap 源码解析](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md) 也已经讨论过了，这里可以结合上面的内容再说一下。
+
+
+
+  oldCap 在扩容中是指 HashMap 在扩容前的容量，也就是原来的 n，上面说到了 (n-1) & hash 是取 hash 的后 y 位，那么 n & hash 呢？很明显，是取 hash 的第 y + 1 位。如果我们扩容后的 cap 为 m，按照 HashMap 的源码，不管极限情况下是 m = 2 * n，那么 (2 * n) & hash 的结果呢？那就是在取 hash 的 y + 2 位。
 
