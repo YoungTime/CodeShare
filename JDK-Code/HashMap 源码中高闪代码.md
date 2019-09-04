@@ -40,3 +40,5 @@
 
    在[HashMap 源码解析](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md) 中已经对于 HashMap 的扩容做了一个分享，我们知道 HashMap 扩容时，根据 e.hash & oldCap 来判断将原来的链表放入到哪一个新的链表中，并且将两个链表的头指针一个放入了 table[j]，一个放入了 table[j + oldCap]。
 
+  作为 JDK 8 的源码，这里用作判断 e.hash & oldCap 和链表头指针的位置肯定不是随意写的，这个原因我在[HashMap 源码解析](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md) 
+
