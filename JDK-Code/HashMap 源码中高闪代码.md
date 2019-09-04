@@ -24,3 +24,9 @@
 
 ![hashmap_2_4](../image/hashmap_2_4.png)
 
+a 的前面 x 位等于有多少个 b，a 的后 y 位表示 a % b 为多少。我们分别将 a 的前 x 位置为 0，和后 y 位置为 0：
+
+![hashmap_2_5](../image/hashmap_2_5.png)
+
+![hashmap_2_6](../image/hashmap_2_6.png)
+
