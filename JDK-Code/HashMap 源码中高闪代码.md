@@ -46,5 +46,18 @@
 
 
 
-  oldCap 在扩容中是指 HashMap 在扩容前的容量，也就是原来的 n，上面说到了 (n-1) & hash 是取 hash 的后 y 位，那么 n & hash 呢？很明显，是取 hash 的第 y + 1 位。如果我们扩容后的 cap 为 m，按照 HashMap 的源码，不管极限情况下是 m = 2 * n，那么 (2 * n) & hash 的结果呢？那就是在取 hash 的 y + 2 位。
+  oldCap 在扩容中是指 HashMap 在扩容前的容量，也就是原来的 n，上面说到了 (n-1) & hash 是取 hash 的后 y 位，那么 n & hash 呢？很明显，是取 hash 的第 y + 1 位。
 
+![hashmap_2_8](D:\ThoughtSpace\CodeShare\image\hashmap_2_8.png)
+
+  我们看，如果 hash 的第 y +1 位为 0，那么 n & hash 就等于 0，如果 hash 的第 y + 1 位为 1，那么 n & hash 就等于 n。而在 HashMap 源码中，扩容时，如果 n & hash == 0，那么就把 Node 放入 lo 链表，如果 n & hash ！= 0，那么就把 Node 放入 hi 链表，其中 lo 链表的头指针是放入 table[j]，hi 链表是放入 table[j + oldCap]。
+
+  HashMap 中找下标的方式就是 (n - 1) & hash，也就是 hash % n，也就是等于 hash 的后 y 位的值，那么扩容后的下标呢？就等于 (2*n - 1) & hash，也就是 hash % (2 * n)，也就是等于 hash 的后 y + 1 位的值，那么距离差为什么呢？距离差就是 hash 的后 y + 1 位的值减去 hash 的后 y 位的值，那么不就等于 hash 的 y + 1 位的值吗？如果 hash 值的 y + 1 位为 0，那么距离差就为 0，如果 hash 值的 y + 1 位为 1，那么距离差就为 n，也就是 oldCap。那就对应着 table[j] 和 table[j + oldCap]。
+
+  你看，是不是很巧妙呢？其实源码中还有很多巧妙的地方等着我们去发现，大家一起努力探寻，努力学习吧。
+
+   好了，HashMap 源码中的高闪地方就先说到这里，如果想要一起学习的话，可以持续关注这个项目，或者关注我的个人微信公众号。
+
+![hashmap_1_3](../image/hashmap_1_3.png)
+
+  觉得喜欢的话请给我一个 Star，谢谢！
