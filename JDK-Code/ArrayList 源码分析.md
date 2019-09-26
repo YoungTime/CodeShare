@@ -20,6 +20,8 @@
 
   我们看到了，如果没有实现 Cloneable 接口而使用 clone() 方法的话是会抛出 CloneNotSupportedException。所以类似于 RandomAccess 和 Cloneable 这样没有实体的接口在 Java 中被称为标记型接口，用来标记一个类或者接口。
 
+## 主要参数
+
   接下来我们看一下 ArrayList 的主要参数：
 
 ```java
@@ -42,7 +44,9 @@ transient Object[] elementData;
 private int size;
 ```
 
-  接下来我们看一下 ArrayList 的构造方法，ArrayList 有三个构造方法：
+##  构造方法
+
+ 接下来我们看一下 ArrayList 的构造方法，ArrayList 有三个构造方法：
 
 ```java
 // 传入一个容量
@@ -100,5 +104,42 @@ public static <T,U> T[] copyOf(U[] original, int newLength, Class<? extends T[]>
 
   我们看到在 ArrayList 的第三个构造方法中，传入的新类型也是 Object，所以它这里调用 Arrays.copyof 是为了将 elementData 转为 Object 数组。
 
-  在集合类中，get()、和 add() / set() / put() 无疑是最重要的几个方法
+## add()、set()、get()
+
+ 在集合类中，get()、和 add() / set() / put() 无疑是最重要的几个方法，我们先来看看 ArrayList 中的 add() 方法，ArrayList 中有两个 add() 方法：
+
+```java
+// 将元素添加到数组末尾
+public boolean add(E e) {
+        // 该方法我们通过方法名就可以看出是为了确保内部容量足够，下面会讲到
+        ensureCapacityInternal(size + 1);  // Increments modCount!!
+        // 然后将元素 e 存入 size++ 位置
+        elementData[size++] = e;
+        return true;
+    }
+```
+
+  在看第二个 add() 方法之前，我们需要先看一下 System.arraycopy() 这个方法：
+
+```java
+// 将元素添加到数组固定位置
+public void add(int index, E element) {
+        // 插入的 index 是不能比 size 大，比 0 小
+        if (index > size || index < 0)
+            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
+        // 确保内部容量足够
+        ensureCapacityInternal(size + 1);  // Increments modCount!!
+        // 这个方法是 System 的一个 native 方法
+        System.arraycopy(elementData, index, elementData, index + 1,
+                         size - index);
+        elementData[index] = element;
+        size++;
+    }
+```
+
+
+
+
+
+
 
