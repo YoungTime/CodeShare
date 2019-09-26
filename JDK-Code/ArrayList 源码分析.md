@@ -45,10 +45,60 @@ private int size;
   接下来我们看一下 ArrayList 的构造方法，ArrayList 有三个构造方法：
 
 ```java
+// 传入一个容量
+public ArrayList(int initialCapacity) {
+        // 容量大于 0，就新建一个大小为容量的 Object 数组
+        if (initialCapacity > 0) {
+            this.elementData = new Object[initialCapacity];
+        } else if (initialCapacity == 0) {
+            // 等于 0 就初始化为参数空数组
+            this.elementData = EMPTY_ELEMENTDATA;
+        } else {
+            // 要不就抛出一个异常
+            throw new IllegalArgumentException("Illegal Capacity: "+
+                                               initialCapacity);
+        }
+    }
 
+// 不传入容量时，则初始化为第二个空数组
+public ArrayList() {
+        this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+    }
+
+// 传入一个集合
+public ArrayList(Collection<? extends E> c) {
+        // 数组就为集合转数组
+        elementData = c.toArray();
+        if ((size = elementData.length) != 0) {
+            // 元素数量不为 0
+            // c.toArray might (incorrectly) not return Object[] (see 6260652)
+            if (elementData.getClass() != Object[].class)
+                // 如果类型不为 Object 数组，则使用 copyof
+                elementData = Arrays.copyOf(elementData, size, Object[].class);
+        } else {
+            // replace with empty array.
+            // 元素数量为 0，则替换为空数组 
+            this.elementData = EMPTY_ELEMENTDATA;
+        }
+    }
 ```
 
+  我们来看一下 Arrays 中的 copyof 干了啥？
 
+```java
+public static <T,U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType) {
+        @SuppressWarnings("unchecked")
+        // 如果原来的数组是 Object 数组就返回 Object 数组，如果不为 Object 数组，则返回一个传入的新         // 类型的数组 
+        T[] copy = ((Object)newType == (Object)Object[].class)
+            ? (T[]) new Object[newLength]
+            : (T[]) Array.newInstance(newType.getComponentType(), newLength);
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+```
 
+  我们看到在 ArrayList 的第三个构造方法中，传入的新类型也是 Object，所以它这里调用 Arrays.copyof 是为了将 elementData 转为 Object 数组。
 
+  在集合类中，get()、和 add() / set() / put() 无疑是最重要的几个方法
 
