@@ -18,5 +18,37 @@
 
 ![arraylist_1_4](../image/arraylist_1_4.png)
 
-我们看到了，如果没有实现 Cloneable 接口而使用 clone() 方法的话是会抛出 CloneNotSupportedException。
+  我们看到了，如果没有实现 Cloneable 接口而使用 clone() 方法的话是会抛出 CloneNotSupportedException。所以类似于 RandomAccess 和 Cloneable 这样没有实体的接口在 Java 中被称为标记型接口，用来标记一个类或者接口。
+
+  接下来我们看一下 ArrayList 的主要参数：
+
+```java
+// ArrayList 的默认容量
+private static final int DEFAULT_CAPACITY = 10;
+
+// 这是一个空数组，用来初始化真正保存数据的数组
+private static final Object[] EMPTY_ELEMENTDATA = {};
+
+// 这个也是空数组，用来初始化的，它与上面的空数组的不同在源码中解释如下
+// We distinguish this from EMPTY_ELEMENTDATA to know how much to inflate when first 
+// element is added.
+// 我们将此与EMPTY_ELEMENTDATA区别开来，以了解添加第一个元素时要充气多少。
+private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
+
+// ArrayList 中用来真正保存数组的 Object 数组
+transient Object[] elementData;
+
+// ArrayList 中保存的元素数量
+private int size;
+```
+
+  接下来我们看一下 ArrayList 的构造方法，ArrayList 有三个构造方法：
+
+```java
+
+```
+
+
+
+
 
