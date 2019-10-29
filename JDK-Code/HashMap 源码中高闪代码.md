@@ -56,8 +56,8 @@
 
   你看，是不是很巧妙呢？其实源码中还有很多巧妙的地方等着我们去发现，大家一起努力探寻，努力学习吧。
 
-   好了，HashMap 源码中的高闪地方就先说到这里，如果想要一起学习的话，可以持续关注这个项目，或者关注我的个人微信公众号。
+   好了，HashMap 源码中的高闪地方就先说到这里，如果想要一起学习的话，可以持续关注这个 [GitHub项目](https://github.com/YoungTime/CodeShare)，或者关注我的个人微信公众号。
 
 ![hashmap_1_3](../image/hashmap_1_3.png)
 
-  觉得喜欢的话请给我一个 Star，谢谢！
+  觉得喜欢的话请给我这个 [GitHub 项目](https://github.com/YoungTime/CodeShare) 一个 Star，谢谢！

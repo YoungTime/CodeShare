@@ -417,11 +417,11 @@ final Node<K,V>[] resize() {
 
   所以我们源码中才会判断当 e.hash & oldCap 为 0 时将节点插入到 lo 链表，不为 0 时插入到 hi 链表，我们的扩容就将一个链表巧妙的分成了两个链表。
 
-  好了，HashMap 的源码主要部分就先说到这里，如果想要一起学习的话，可以持续关注这个项目，或者关注我的个人微信公众号。
+  好了，HashMap 的源码主要部分就先说到这里，如果想要一起学习的话，如果想要一起学习的话，可以持续关注这个 [GitHub项目](https://github.com/YoungTime/CodeShare)，或者关注我的个人微信公众号。
 
-![hashmap_1_3](/image/hashmap_1_3.png)
+![hashmap_1_3](../image/hashmap_1_3.png)
 
-  觉得喜欢的话请给我一个 Star，谢谢！
+  觉得喜欢的话请给我这个 [GitHub 项目](https://github.com/YoungTime/CodeShare) 一个 Star，谢谢！
 
  
 

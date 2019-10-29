@@ -1,5 +1,5 @@
 # HashSet 源码解读
-  HashSet 也是 Java 集合中一个相对常用的，其内部实现比较简单，而且其内部是相当于维护了一个 HashMap，可以先看一下 [HashMap 源码解读]()。与 HashMap 维护的 key-value 两个成员不同的是，HashSet 只相当于维护了一个成员 E，虽然内部使用的 HashMap，但是内部维护的 HashMap 的 value 是一个 final 的 Object，所以相当于 HashSet 是维护了 HashMap 的 key。
+  HashSet 也是 Java 集合中一个相对常用的，其内部实现比较简单，而且其内部是相当于维护了一个 HashMap，可以先看一下 [HashMap 源码解读]([https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap 源码解读.md))。与 HashMap 维护的 key-value 两个成员不同的是，HashSet 只相当于维护了一个成员 E，虽然内部使用的 HashMap，但是内部维护的 HashMap 的 value 是一个 final 的 Object，所以相当于 HashSet 是维护了 HashMap 的 key。
 
 ## HashSet 的内部元素
 
@@ -12,7 +12,7 @@ private static final Object PRESENT = new Object();
 
 ## HashSet 的构造方法
 
-  HashSet 有 5 个构造方法，其中四个对应的是 HashMap 的四个构造方法，一个对应的是LinkedHashMap，所以如果想了解 HashSet 的源码，建议先看一下 [HashMap 的源码]()。
+  HashSet 有 5 个构造方法，其中四个对应的是 HashMap 的四个构造方法，一个对应的是LinkedHashMap，所以如果想了解 HashSet 的源码，建议先看一下 [HashMap 的源码]([https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap%20%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB.md](https://github.com/YoungTime/CodeShare/blob/master/JDK-Code/HashMap 源码解读.md))。
 
   前四个构造方法：
 
@@ -93,8 +93,8 @@ public void clear() {
 
   这么看起来，其实 HashMap 就是一个只维护了 key 的 HashMap，所以 HashMap key 的属性就是 HashSet 元素的属性，也就是说因为 HashMap 的 key 可以为空但是不能重复的，所以 HashSet 的元素就是可以为空但是不能重复的。
 
-  好了，关于 HashSet 的源码分享就是这些了，其实只要了解了 HashMap 的源码，HashSet 的源码内容就大致了解。如果想要一起学习的话，可以持续关注这个项目，或者关注我的个人微信公众号。
+  好了，关于 HashSet 的源码分享就是这些了，其实只要了解了 HashMap 的源码，HashSet 的源码内容就大致了解。如果想要一起学习的话，可以持续关注这个 [GitHub项目](https://github.com/YoungTime/CodeShare)，或者关注我的个人微信公众号。
 
-![hashmap_1_3](/image/hashmap_1_3.png)
+![hashmap_1_3](../image/hashmap_1_3.png)
 
-  觉得喜欢的话请给我一个 Star，谢谢！ 
+  觉得喜欢的话请给我这个 [GitHub 项目](https://github.com/YoungTime/CodeShare) 一个 Star，谢谢！ 

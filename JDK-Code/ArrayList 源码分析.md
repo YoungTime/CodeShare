@@ -314,6 +314,8 @@ private void fastRemove(int index) {
 
   通过这次的 ArrayList 源码分析，我们可以看到 ArrayList 的查询是非常快的，但是增删都比较慢，add() 如果是直接添加到末尾还好说，如果添加到中间，数组后面的元素是全部需要移动的，而删除时，不管是哪种方式，都是需要移动数组，就导致增删比较慢。当然这里的慢一般是比较少见的，平时我们使用的场景的数组元素的个数一般来说是感受不到这种快慢的，但是呢，我们了解了其内部结构过后我们也可以按照场景选择不同的集合类了。
 
-好了，ArrayList 的源码就分享到这里了，喜欢的话请关注我的个人微信公众号：
+好了，ArrayList 的源码就分享到这里了，如果想要一起学习的话，可以持续关注这个 [GitHub项目](https://github.com/YoungTime/CodeShare)，或者关注我的个人微信公众号。
 
-![WeChat](../image/hashmap_1_3.png)
+![hashmap_1_3](../image/hashmap_1_3.png)
+
+  觉得喜欢的话请给我这个 [GitHub 项目](https://github.com/YoungTime/CodeShare) 一个 Star，谢谢！
