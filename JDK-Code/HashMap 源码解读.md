@@ -100,6 +100,8 @@ public HashMap(Map<? extends K, ? extends V> m) {
         putMapEntries(m, false);
     }
 ```
+## put 方法
+
   上面我们看到使用了 putMapEntries 方法将原 map 放入新的 HashMap，那么它到底干了啥呢？
 
   ```java
@@ -237,6 +239,8 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 
   HashMap 的 put 方法就是这样的，那么 get 方法呢？在 HashMap 中的 get 方法使用的是 getNode 方法：
 
+## get 方法
+
 ```java
 public V get(Object key) {
         Node<K,V> e;
@@ -273,6 +277,8 @@ final Node<K,V> getNode(int hash, Object key) {
         return null;
     }
 ```
+
+## 扩容
 
   我们看到了，上面 put 数据时会进行扩容操作，那么按道理来说 HashMap 是将 Node 数据放入到了数组下标为 (n - 1) & hash 的 Hash 桶中，当 hash 值一样时便会放入数组下标中 Node 的子节点使用链表保存，那么为什么还需要扩容呢？其实就是因为链表的长度过长时会影响我们 HashMap 的效率，所以说 HashMap 扩容就是将 HashMap 中 Hash 桶中的链表变短，而实际扩容也是这么操作的：
 
@@ -321,6 +327,8 @@ final Node<K,V>[] resize() {
         return newTab;
     }
 ```
+
+## 数据迁移
 
   我们看到了怎么更新容量和扩容值的，那么扩容完不做数据迁移，扩容又有什么意义呢？下面我们就来看看怎么做的数据迁移：
 
